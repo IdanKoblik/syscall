@@ -3,13 +3,16 @@ FROM alpine:latest
 RUN apk add --no-cache --update curl ca-certificates openssl git tar bash sqlite fontconfig \
     && adduser --disabled-password --home /home/container container
 
-USER container
-WORKDIR /home/container
+WORKDIR /app/
 
-ADD syscall-bot /home/container
-RUN chmod +x /home/container/syscall-bot
+ADD syscall-bot /app/
+
+RUN chmod +x /app/syscall-bot
 
 RUN ls -la
-RUN ls -la /home/container
 
-CMD ["/bin/bash", "/home/container/syscall-bot"]
+USER container
+
+WORKDIR /home/container/
+
+CMD ["/bin/bash", "/app/syscall-bot"]
