@@ -6,20 +6,22 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY *.go ./
-RUN go build -o syscall-bot
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o syscall-bot
 
 FROM alpine:latest
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates tree
 
 RUN adduser -D container
 
 WORKDIR /home/container
 
-COPY --from=builder /app/syscall-bot /app/syscall-bot
-RUN chmod +x /app/syscall-bot
+COPY --from=builder /app/syscall-bot ./syscall-bot
+
+RUN tree /
 
 USER container
 
-CMD ["/app/syscall-bot"]
+CMD ["./syscall-bot"]
 
