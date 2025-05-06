@@ -12,6 +12,7 @@ RUN chown container:container /home/container/syscall-bot \
 USER container
 
 RUN ls -la
+RUN pwd
 
-CMD ["./home/container/syscall-bot"]
+CMD ["/syscall-bot"]
 
