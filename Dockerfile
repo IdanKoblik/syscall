@@ -9,5 +9,6 @@ RUN chmod +x syscall-bot
 USER container
 ENV USER=container HOME=/home/container
 
+RUN ls -la
 
 CMD ["/bin/bash", "/syscall-bot"]
