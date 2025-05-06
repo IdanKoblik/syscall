@@ -7,7 +7,7 @@ USER container
 WORKDIR /home/container
 
 ADD syscall-bot /home/container
-RUN chmod +x syscall-bot
+RUN chmod +x /home/container/syscall-bot
 
 RUN ls -la
 RUN ls -la /home/container
