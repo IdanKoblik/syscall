@@ -1,21 +1,24 @@
-FROM golang:1.24
+FROM golang:1.24 as builder
 
-RUN apt-get update && apt-get install -y tree
+WORKDIR /app
 
-LABEL maintainer="me@idank.dev"
+COPY go.mod go.sum ./
+RUN go mod download
 
-WORKDIR /app/
+COPY *.go ./
+RUN go build -o syscall-bot
 
-COPY *.go /app/
-COPY go.mod go.sum /app/
+FROM alpine:latest
 
-RUN go build -o /app/syscall-bot
+RUN apk add --no-cache ca-certificates
 
-RUN useradd -m container
+RUN adduser -D container
 USER container
 
-WORKDIR /home/container/
+WORKDIR /home/container
 
-RUN tree
-CMD ["./syscall-bot"]
+COPY --from=builder /app/syscall-bot /app/syscall-bot
+
+RUN chmod +x /app/syscall-bot
+CMD ["/app/syscall-bot"]
 
