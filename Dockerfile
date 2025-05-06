@@ -1,16 +1,11 @@
-FROM golang:1.24 as builder
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY *.go ./
-RUN CGO_ENABLED=0 GOOS=linux go build -o syscall-bot
-
 FROM alpine:latest
-RUN apk add --no-cache ca-certificates
-RUN adduser -D container
-WORKDIR /home/container
-COPY --from=builder /app/syscall-bot .
-RUN chmod +x syscall-bot
-RUN ls -la
+
+RUN apk add --no-cache --update curl ca-certificates openssl git tar bash sqlite fontconfig \
+    && adduser --disabled-password --home /home/container container
+
 USER container
-CMD ["./syscall-bot"]
+ENV USER=container HOME=/home/container
+
+ADD syscall-bot /
+
+CMD ["/bin/bash", "/syscall-bot"]
