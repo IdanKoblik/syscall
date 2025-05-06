@@ -8,4 +8,5 @@ ENV USER=container HOME=/home/container
 
 ADD syscall-bot /
 
+RUN chmod +x syscall-bot
 CMD ["/bin/bash", "/syscall-bot"]
