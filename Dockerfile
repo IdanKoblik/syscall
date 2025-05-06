@@ -1,5 +1,7 @@
 FROM golang:1.24
 
+RUN apt-get update && apt-get install -y tree
+
 LABEL maintainer="me@idank.dev"
 
 WORKDIR /app/
