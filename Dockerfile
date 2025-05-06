@@ -8,8 +8,6 @@ USER container
 WORKDIR /home/container/
 
 ADD syscall-bot /home/container/
-RUN chmod +x /home/container/syscall-bot
-
 RUN ls -la
 
 CMD ["/bin/bash", "/app/syscall-bot"]
