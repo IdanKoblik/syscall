@@ -14,5 +14,5 @@ USER container
 RUN ls -la
 RUN pwd
 
-CMD ["syscall-bot"]
+CMD ["/home/container/syscall-bot"]
 
