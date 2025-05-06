@@ -9,6 +9,8 @@ ADD syscall-bot /home/container/
 RUN chown container:container /home/container/syscall-bot \
     && chmod +x /home/container/syscall-bot
 
+RUN ls -la
+
 USER container
 
 CMD ["./syscall-bot"]
