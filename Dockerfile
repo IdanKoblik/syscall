@@ -13,12 +13,13 @@ FROM alpine:latest
 RUN apk add --no-cache ca-certificates
 
 RUN adduser -D container
-USER container
 
 WORKDIR /home/container
 
 COPY --from=builder /app/syscall-bot /app/syscall-bot
-
 RUN chmod +x /app/syscall-bot
+
+USER container
+
 CMD ["/app/syscall-bot"]
 
