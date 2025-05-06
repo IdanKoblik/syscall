@@ -6,9 +6,9 @@ RUN apk add --no-cache --update curl ca-certificates openssl git tar bash sqlite
 ADD syscall-bot /
 RUN chmod +x syscall-bot
 
+RUN ls -la
+
 USER container
 ENV USER=container HOME=/home/container
-
-RUN ls -la
 
 CMD ["/bin/bash", "/syscall-bot"]
