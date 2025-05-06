@@ -9,6 +9,7 @@ COPY go.mod go.sum ./
 
 RUN go build -o syscall-bot
 
+RUN useradd -m container
 USER container
 
 WORKDIR /home/container/
