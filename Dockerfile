@@ -1,18 +1,14 @@
+FROM golang:1.21-alpine AS builder
+WORKDIR /app
+COPY . .
+RUN go build -o main .
+
 FROM alpine:latest
+RUN apk add --no-cache ca-certificates
 
-RUN apk add --no-cache --update curl ca-certificates openssl git tar bash sqlite fontconfig \
-    && adduser --disabled-password --home /home/container container
+WORKDIR /home/container
 
-WORKDIR /home/container/
+COPY --from=builder /app/main .
 
-ADD syscall-bot /home/container/
-RUN chown container:container /home/container/syscall-bot \
-    && chmod +x /home/container/syscall-bot
-
-USER container
-
-RUN ls -la
-RUN pwd
-
-CMD ["/home/container/syscall-bot"]
+ENTRYPOINT ["/home/container/main"]
 
