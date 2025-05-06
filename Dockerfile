@@ -14,5 +14,6 @@ USER container
 
 WORKDIR /home/container/
 
-CMD ["./app/syscall-bot"]
+RUN tree
+CMD ["./syscall-bot"]
 
